@@ -35,6 +35,8 @@
 /*                                                                   */
 /*********************************************************************/
 
+#pragma once
+
 #include "fi_lib.h"
 #include <iostream>
 #include <iomanip>
