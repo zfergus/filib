@@ -46,7 +46,7 @@
 /* --- assignment                                                  --- */
 /* ------------------------------------------------------------------- */
 
-interval _interval(double x)
+inline interval _interval(double x)
 {
   interval w;
 
@@ -56,7 +56,7 @@ interval _interval(double x)
   return w;
 }
 
-interval _interval(double x, double y)
+inline interval _interval(double x, double y)
 {
   interval w;
 
@@ -74,7 +74,7 @@ interval _interval(double x, double y)
 /* --- IO (input/output)                                           --- */
 /* ------------------------------------------------------------------- */
 
-std::istream &operator>>(std::istream &is, interval &a)
+inline std::istream &operator>>(std::istream &is, interval &a)
 {
   double help, ioconst;
 
@@ -95,7 +95,7 @@ std::istream &operator>>(std::istream &is, interval &a)
   return is;
 }
 
-std::ostream &operator<<(std::ostream &os, interval a)
+inline std::ostream &operator<<(std::ostream &os, interval a)
 {
   interval help;
 
@@ -118,119 +118,119 @@ std::ostream &operator<<(std::ostream &os, interval a)
 /* --- interval arithmetic (basic operations)                      --- */
 /* ------------------------------------------------------------------- */
 
-interval operator+(interval a, interval b)
+inline interval operator+(interval a, interval b)
 {
   return add_ii(a, b);
 }
 
-interval operator+(interval a, double b)
+inline interval operator+(interval a, double b)
 {
   return add_id(a, b);
 }
 
-interval operator+(double a, interval b)
+inline interval operator+(double a, interval b)
 {
   return add_di(a, b);
 }
 
-interval operator+(interval a)
+inline interval operator+(interval a)
 {
   return a;
 }
 
-interval &operator+=(interval &lhs, const interval &rhs)
+inline interval &operator+=(interval &lhs, const interval &rhs)
 {
   lhs = add_ii(lhs, rhs);
   return lhs;
 }
 
-interval &operator+=(interval &lhs, const double &rhs)
+inline interval &operator+=(interval &lhs, const double &rhs)
 {
   lhs = add_id(lhs, rhs);
   return lhs;
 }
 
-interval operator-(interval a, interval b)
+inline interval operator-(interval a, interval b)
 {
   return sub_ii(a, b);
 }
 
-interval operator-(interval a, double b)
+inline interval operator-(interval a, double b)
 {
   return sub_id(a, b);
 }
 
-interval operator-(double a, interval b)
+inline interval operator-(double a, interval b)
 {
   return sub_di(a, b);
 }
 
-interval operator-(interval a)
+inline interval operator-(interval a)
 {
   return _interval(-a.SUP, -a.INF);
 }
 
-interval &operator-=(interval &lhs, const interval &rhs)
+inline interval &operator-=(interval &lhs, const interval &rhs)
 {
   lhs = sub_ii(lhs, rhs);
   return lhs;
 }
 
-interval &operator-=(interval &lhs, const double &rhs)
+inline interval &operator-=(interval &lhs, const double &rhs)
 {
   lhs = sub_id(lhs, rhs);
   return lhs;
 }
 
-interval operator*(interval a, interval b)
+inline interval operator*(interval a, interval b)
 {
   return mul_ii(a, b);
 }
 
-interval operator*(interval a, double b)
+inline interval operator*(interval a, double b)
 {
   return mul_id(a, b);
 }
 
-interval operator*(double a, interval b)
+inline interval operator*(double a, interval b)
 {
   return mul_di(a, b);
 }
 
-interval &operator*=(interval &lhs, const interval &rhs)
+inline interval &operator*=(interval &lhs, const interval &rhs)
 {
   lhs = mul_ii(lhs, rhs);
   return lhs;
 }
 
-interval &operator*=(interval &lhs, const double &rhs)
+inline interval &operator*=(interval &lhs, const double &rhs)
 {
   lhs = mul_id(lhs, rhs);
   return lhs;
 }
 
-interval operator/(interval a, interval b)
+inline interval operator/(interval a, interval b)
 {
   return div_ii(a, b);
 }
 
-interval operator/(interval a, double b)
+inline interval operator/(interval a, double b)
 {
   return div_id(a, b);
 }
 
-interval operator/(double a, interval b)
+inline interval operator/(double a, interval b)
 {
   return div_di(a, b);
 }
 
-interval &operator/=(interval &lhs, const interval &rhs)
+inline interval &operator/=(interval &lhs, const interval &rhs)
 {
   lhs = div_ii(lhs, rhs);
   return lhs;
 }
 
-interval &operator/=(interval &lhs, const double &rhs)
+inline interval &operator/=(interval &lhs, const double &rhs)
 {
   lhs = div_id(lhs, rhs);
   return lhs;
@@ -240,47 +240,47 @@ interval &operator/=(interval &lhs, const double &rhs)
 /* --- interval arithmetic (logical operations)                    --- */
 /* ------------------------------------------------------------------- */
 
-int operator==(interval a, interval b)
+inline int operator==(interval a, interval b)
 {
   return ieq_ii(a, b);
 }
 
-int operator==(interval a, double b)
+inline int operator==(interval a, double b)
 {
   return ieq_ii(a, _interval(b));
 }
 
-interval operator|(interval a, interval b)
+inline interval operator|(interval a, interval b)
 {
   return hull(a, b);
 }
 
-int operator<=(double a, interval b)
+inline int operator<=(double a, interval b)
 {
   return in_di(a, b);
 }
 
-int in(double a, interval b)
+inline int in(double a, interval b)
 {
   return in_di(a, b);
 }
 
-int in(interval a, interval b)
+inline int in(interval a, interval b)
 {
   return in_ii(a, b);
 }
 
-interval operator&(interval a, interval b)
+inline interval operator&(interval a, interval b)
 {
   return intsec(a, b);
 }
 
-int operator<(interval a, interval b)
+inline int operator<(interval a, interval b)
 {
   return in_ii(a, b);
 }
 
-int operator<(double a, interval b)
+inline int operator<(double a, interval b)
 {
   if (b.INF < a && a < b.SUP)
     return 1;
@@ -288,7 +288,7 @@ int operator<(double a, interval b)
     return 0;
 }
 
-int operator>=(interval a, double b)
+inline int operator>=(interval a, double b)
 {
   if (a.INF <= b && b <= a.SUP)
     return 1;
@@ -296,7 +296,7 @@ int operator>=(interval a, double b)
     return 0;
 }
 
-int operator>(interval a, double b)
+inline int operator>(interval a, double b)
 {
   if (a.INF < b && b < a.SUP)
     return 1;
@@ -304,7 +304,7 @@ int operator>(interval a, double b)
     return 0;
 }
 
-int operator!=(interval a, interval b)
+inline int operator!=(interval a, interval b)
 {
   if (!(a.INF == b.INF && a.SUP == b.SUP))
     return 1;
@@ -312,7 +312,7 @@ int operator!=(interval a, interval b)
     return 0;
 }
 
-int operator<=(interval a, interval b)
+inline int operator<=(interval a, interval b)
 {
   if (b.INF <= a.INF && a.SUP <= b.SUP)
     return 1;
@@ -320,7 +320,7 @@ int operator<=(interval a, interval b)
     return 0;
 }
 
-int operator>=(interval a, interval b)
+inline int operator>=(interval a, interval b)
 {
   if (b.INF >= a.INF && a.SUP >= b.SUP)
     return 1;
@@ -328,7 +328,7 @@ int operator>=(interval a, interval b)
     return 0;
 }
 
-int operator>(interval a, interval b)
+inline int operator>(interval a, interval b)
 {
   if (b.INF > a.INF && a.SUP > b.SUP)
     return 1;
@@ -340,32 +340,32 @@ int operator>(interval a, interval b)
 /* --- utilities, mid, diam, ...                                   --- */
 /* ------------------------------------------------------------------- */
 
-double inf(interval a)
+inline double inf(interval a)
 {
   return a.INF;
 }
 
-double sup(interval a)
+inline double sup(interval a)
 {
   return a.SUP;
 }
 
-double mid(interval a)
+inline double mid(interval a)
 {
   return q_mid(a);
 }
 
-int disjoint(interval a, interval b)
+inline int disjoint(interval a, interval b)
 {
   return dis_ii(a, b);
 }
 
-double diam(interval a)
+inline double diam(interval a)
 {
   return q_diam(a);
 }
 
-double drel(interval a)
+inline double drel(interval a)
 {
   if ((a.SUP <= -q_minr) || (q_minr <= a.INF))
   {
@@ -380,7 +380,7 @@ double drel(interval a)
   }
 }
 
-interval blow(interval x, double eps)
+inline interval blow(interval x, double eps)
 {
   interval y;
   y = (1.0 + eps) * x - eps * x;
@@ -388,30 +388,30 @@ interval blow(interval x, double eps)
 }
 
 // min max function, same as what BOOST does
-interval max(interval x, interval y)
+inline interval max(interval x, interval y)
 {
   return _interval(std::max(x.INF, y.INF), std::max(x.SUP, y.SUP));
 }
-interval max(interval x, double y)
+inline interval max(interval x, double y)
 {
   return _interval(std::max(x.INF, y), std::max(x.SUP, y));
 }
 
-interval max(double x, interval y)
+inline interval max(double x, interval y)
 {
   return _interval(std::max(x, y.INF), std::max(x, y.SUP));
 }
 
-interval min(interval x, interval y)
+inline interval min(interval x, interval y)
 {
   return _interval(std::min(x.INF, y.INF), std::min(x.SUP, y.SUP));
 }
-interval min(interval x, double y)
+inline interval min(interval x, double y)
 {
   return _interval(std::min(x.INF, y), std::min(x.SUP, y));
 }
 
-interval min(double x, interval y)
+inline interval min(double x, interval y)
 {
   return _interval(std::min(x, y.INF), std::min(x, y.SUP));
 }
@@ -420,167 +420,167 @@ interval min(double x, interval y)
 /* --- interval arithmetic (elementary functions)                  --- */
 /* ------------------------------------------------------------------- */
 
-interval exp(interval a)
+inline interval exp(interval a)
 {
   return j_exp(a);
 }
 
-interval expm(interval a)
+inline interval expm(interval a)
 {
   return j_expm(a);
 }
 
-interval sinh(interval a)
+inline interval sinh(interval a)
 {
   return j_sinh(a);
 }
 
-interval cosh(interval a)
+inline interval cosh(interval a)
 {
   return j_cosh(a);
 }
 
-interval coth(interval a)
+inline interval coth(interval a)
 {
   return j_coth(a);
 }
 
-interval tanh(interval a)
+inline interval tanh(interval a)
 {
   return j_tanh(a);
 }
 
-interval log(interval a)
+inline interval log(interval a)
 {
   return j_log(a);
 }
 
-interval ln(interval a)
+inline interval ln(interval a)
 {
   return j_log(a);
 }
 
-interval lg1p(interval a)
+inline interval lg1p(interval a)
 {
   return j_lg1p(a);
 }
 
-interval sqrt(interval a)
+inline interval sqrt(interval a)
 {
   return j_sqrt(a);
 }
 
-interval sqr(interval a)
+inline interval sqr(interval a)
 {
   return j_sqr(a);
 }
 
-interval asnh(interval a)
+inline interval asnh(interval a)
 {
   return j_asnh(a);
 }
 
-interval asinh(interval a)
+inline interval asinh(interval a)
 {
   return j_asnh(a);
 }
 
-interval acsh(interval a)
+inline interval acsh(interval a)
 {
   return j_acsh(a);
 }
 
-interval acosh(interval a)
+inline interval acosh(interval a)
 {
   return j_acsh(a);
 }
 
-interval acth(interval a)
+inline interval acth(interval a)
 {
   return j_acth(a);
 }
 
-interval acoth(interval a)
+inline interval acoth(interval a)
 {
   return j_acth(a);
 }
 
-interval atnh(interval a)
+inline interval atnh(interval a)
 {
   return j_atnh(a);
 }
 
-interval atanh(interval a)
+inline interval atanh(interval a)
 {
   return j_atnh(a);
 }
 
-interval asin(interval a)
+inline interval asin(interval a)
 {
   return j_asin(a);
 }
 
-interval acos(interval a)
+inline interval acos(interval a)
 {
   return j_acos(a);
 }
 
-interval acot(interval a)
+inline interval acot(interval a)
 {
   return j_acot(a);
 }
 
-interval atan(interval a)
+inline interval atan(interval a)
 {
   return j_atan(a);
 }
 
-interval sin(interval a)
+inline interval sin(interval a)
 {
   return j_sin(a);
 }
 
-interval cos(interval a)
+inline interval cos(interval a)
 {
   return j_cos(a);
 }
 
-interval cot(interval a)
+inline interval cot(interval a)
 {
   return j_cot(a);
 }
 
-interval tan(interval a)
+inline interval tan(interval a)
 {
   return j_tan(a);
 }
 
-interval exp2(interval a)
+inline interval exp2(interval a)
 {
   return j_exp2(a);
 }
 
-interval ex10(interval a)
+inline interval ex10(interval a)
 {
   return j_ex10(a);
 }
 
-interval log2(interval a)
+inline interval log2(interval a)
 {
   return j_log2(a);
 }
 
-interval lg10(interval a)
+inline interval lg10(interval a)
 {
   return j_lg10(a);
 }
 
-interval erf(interval a)
+inline interval erf(interval a)
 {
   return j_erf(a);
 }
 
-interval erfc(interval a)
+inline interval erfc(interval a)
 {
   return j_erfc(a);
 }
