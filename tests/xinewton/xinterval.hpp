@@ -5,7 +5,7 @@
 /*                                                                   */
 /*********************************************************************/
 
-#include"filib/interval.hpp"
+#include <filib/interval.hpp>
 
 typedef enum { Finite, PlusInfty, MinusInfty, Double, Empty } KindType;
 
@@ -28,7 +28,7 @@ class xinterval {                  // Extended intervals according
 };
 
 //----------------------------------------------------------------------------
- 
+
 interval EmptyIntval ( );          // Irregular (empty) interval
 
 //----------------------------------------------------------------------------
@@ -124,7 +124,7 @@ xinterval operator% (const interval& A, const interval& B )
   }
 
   return Q;
-} 
+}
 
 //----------------------------------------------------------------------------
 // Subtraction of an extended interval 'B' from a double value 'a'.
@@ -180,20 +180,22 @@ interval* operator& ( interval X, const xinterval Y )
                       break;
     case PlusInfty  : // [X.inf,X.sup] & [Y.inf,+oo]
                       //----------------------------
-                      if (sup(X) >= Y.inf)
+                      if (sup(X) >= Y.inf) {
                         if (inf(X) > Y.inf)
                           IS[1] = X;
                         else
                           IS[1] = _interval(Y.inf,sup(X));
+                      }
 
                       break;
     case MinusInfty : // [X.inf,X.sup] & [-oo,Y.sup]
                       //----------------------------
-                      if (Y.sup >= inf(X))
+                      if (Y.sup >= inf(X)) {
                         if (sup(X)<Y.sup)
                           IS[1] = X;
                         else
                           IS[1] = _interval(inf(X),Y.sup);
+                      }
 
                       break;
     case Double     : if ( (inf(X) <= Y.sup) && (Y.inf <= sup(X)) ) {
@@ -205,11 +207,12 @@ interval* operator& ( interval X, const xinterval Y )
                           IS[1] = X;
                         else
                           IS[1] = _interval(Y.inf,sup(X));
-                      else if (inf(X) <= Y.sup) // [X.inf,X.sup] & [-oo,Y.sup]
-                        if (sup(X) <= Y.sup)    //----------------------------
+                      else if (inf(X) <= Y.sup) { // [X.inf,X.sup] & [-oo,Y.sup]
+                        if (sup(X) <= Y.sup)      //----------------------------
                           IS[1] = X;
                         else
                           IS[1] = _interval(inf(X),Y.sup);
+                      }
 
                       break;
     case Empty      : break;                           // [X.inf,X.sup] ** [/]

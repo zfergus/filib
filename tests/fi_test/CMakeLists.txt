@@ -1,5 +1,3 @@
-get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
-project(${PROJECT_NAME})
-
-add_executable(${PROJECT_NAME}_bin fi_test.c)
-target_link_libraries(${PROJECT_NAME}_bin filib)
+get_filename_component(TEST_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
+add_executable(${TEST_NAME}_bin fi_test.c)
+target_link_libraries(${TEST_NAME}_bin PRIVATE filib::filib)
