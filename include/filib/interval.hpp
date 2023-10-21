@@ -240,12 +240,12 @@ inline interval &operator/=(interval &lhs, const double &rhs)
 /* --- interval arithmetic (logical operations)                    --- */
 /* ------------------------------------------------------------------- */
 
-inline int operator==(interval a, interval b)
+inline bool operator==(interval a, interval b)
 {
   return ieq_ii(a, b);
 }
 
-inline int operator==(interval a, double b)
+inline bool operator==(interval a, double b)
 {
   return ieq_ii(a, _interval(b));
 }
@@ -255,17 +255,17 @@ inline interval operator|(interval a, interval b)
   return hull(a, b);
 }
 
-inline int operator<=(double a, interval b)
+inline bool operator<=(double a, interval b)
 {
   return in_di(a, b);
 }
 
-inline int in(double a, interval b)
+inline bool in(double a, interval b)
 {
   return in_di(a, b);
 }
 
-inline int in(interval a, interval b)
+inline bool in(interval a, interval b)
 {
   return in_ii(a, b);
 }
@@ -275,12 +275,12 @@ inline interval operator&(interval a, interval b)
   return intsec(a, b);
 }
 
-inline int operator<(interval a, interval b)
+inline bool operator<(interval a, interval b)
 {
   return in_ii(a, b);
 }
 
-inline int operator<(double a, interval b)
+inline bool operator<(double a, interval b)
 {
   if (b.INF < a && a < b.SUP)
     return 1;
@@ -288,7 +288,7 @@ inline int operator<(double a, interval b)
     return 0;
 }
 
-inline int operator>=(interval a, double b)
+inline bool operator>=(interval a, double b)
 {
   if (a.INF <= b && b <= a.SUP)
     return 1;
@@ -296,7 +296,7 @@ inline int operator>=(interval a, double b)
     return 0;
 }
 
-inline int operator>(interval a, double b)
+inline bool operator>(interval a, double b)
 {
   if (a.INF < b && b < a.SUP)
     return 1;
@@ -304,7 +304,7 @@ inline int operator>(interval a, double b)
     return 0;
 }
 
-inline int operator!=(interval a, interval b)
+inline bool operator!=(interval a, interval b)
 {
   if (!(a.INF == b.INF && a.SUP == b.SUP))
     return 1;
@@ -312,7 +312,7 @@ inline int operator!=(interval a, interval b)
     return 0;
 }
 
-inline int operator<=(interval a, interval b)
+inline bool operator<=(interval a, interval b)
 {
   if (b.INF <= a.INF && a.SUP <= b.SUP)
     return 1;
@@ -320,7 +320,7 @@ inline int operator<=(interval a, interval b)
     return 0;
 }
 
-inline int operator>=(interval a, interval b)
+inline bool operator>=(interval a, interval b)
 {
   if (b.INF >= a.INF && a.SUP >= b.SUP)
     return 1;
@@ -328,7 +328,7 @@ inline int operator>=(interval a, interval b)
     return 0;
 }
 
-inline int operator>(interval a, interval b)
+inline bool operator>(interval a, interval b)
 {
   if (b.INF > a.INF && a.SUP > b.SUP)
     return 1;
@@ -355,7 +355,7 @@ inline double mid(interval a)
   return q_mid(a);
 }
 
-inline int disjoint(interval a, interval b)
+inline bool disjoint(interval a, interval b)
 {
   return dis_ii(a, b);
 }
