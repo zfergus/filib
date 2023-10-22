@@ -272,7 +272,7 @@ inline bool operator<=(double a, interval b)
 
 inline bool operator<=(interval a, interval b)
 {
-  retur b.INF <= a.INF && a.SUP <= b.SUP;
+  return b.INF <= a.INF && a.SUP <= b.SUP;
 }
 
 inline bool operator>(interval a, double b)
@@ -303,6 +303,11 @@ inline bool in(double a, interval b)
 inline bool in(interval a, interval b)
 {
   return in_ii(a, b);
+}
+
+inline bool empty(interval a)
+{
+  return a.INF > a.SUP;
 }
 
 inline interval operator|(interval a, interval b)
@@ -366,7 +371,7 @@ inline interval blow(interval x, double eps)
   return (_interval(q_pred(y.INF), q_succ(y.SUP)));
 }
 
-// min max function, same as what BOOST does
+/* min max function, same as what BOOST does */
 inline interval max(interval x, interval y)
 {
   return _interval(std::max(x.INF, y.INF), std::max(x.SUP, y.SUP));
@@ -411,7 +416,7 @@ inline interval sqrt(interval a)
   return j_sqrt(a);
 }
 
-// exponentiation
+/* exponentiation */
 
 inline interval exp(interval a)
 {
@@ -433,7 +438,7 @@ inline interval expm(interval a)
   return j_expm(a);
 }
 
-// logarithm
+/* logarithm */
 
 inline interval log(interval a)
 {
@@ -455,7 +460,7 @@ inline interval lg1p(interval a)
   return j_lg1p(a);
 }
 
-// trigonometric functions
+/* trigonometric functions */
 
 inline interval sin(interval a)
 {
@@ -477,7 +482,7 @@ inline interval tan(interval a)
   return j_tan(a);
 }
 
-// inverse trigonometric functions
+/* inverse trigonometric functions */
 
 inline interval asin(interval a)
 {
@@ -499,7 +504,7 @@ inline interval atan(interval a)
   return j_atan(a);
 }
 
-// hyperbolic functions
+/* hyperbolic functions */
 
 inline interval sinh(interval a)
 {
@@ -521,7 +526,7 @@ inline interval tanh(interval a)
   return j_tanh(a);
 }
 
-// inverse hyperbolic functions
+/* inverse hyperbolic functions */
 
 inline interval asinh(interval a)
 {
@@ -543,7 +548,7 @@ inline interval atanh(interval a)
   return j_atnh(a);
 }
 
-// error function
+/* error function */
 
 inline interval erf(interval a)
 {

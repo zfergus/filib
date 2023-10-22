@@ -1,0 +1,6 @@
+---
+BasedOnStyle: Webkit
+IndentWidth: 2
+SortIncludes: false
+BreakBeforeBraces: Allman
+PointerAlignment: Right
