@@ -250,14 +250,49 @@ inline bool operator==(interval a, double b)
   return ieq_ii(a, _interval(b));
 }
 
-inline interval operator|(interval a, interval b)
+inline bool operator!=(interval a, interval b)
 {
-  return hull(a, b);
+  return a.INF != b.INF || a.SUP != b.SUP;
+}
+
+inline bool operator<(interval a, interval b)
+{
+  return in_ii(a, b);
+}
+
+inline bool operator<(double a, interval b)
+{
+  return b.INF < a && a < b.SUP;
 }
 
 inline bool operator<=(double a, interval b)
 {
-  return in_di(a, b);
+  return a <= b.INF;
+}
+
+inline bool operator<=(interval a, interval b)
+{
+  retur b.INF <= a.INF && a.SUP <= b.SUP;
+}
+
+inline bool operator>(interval a, double b)
+{
+  return a.INF < b && b < a.SUP;
+}
+
+inline bool operator>(interval a, interval b)
+{
+  return b.INF > a.INF && a.SUP > b.SUP;
+}
+
+inline bool operator>=(interval a, double b)
+{
+  return a.INF <= b && b <= a.SUP;
+}
+
+inline bool operator>=(interval a, interval b)
+{
+  return b.INF >= a.INF && a.SUP >= b.SUP;
 }
 
 inline bool in(double a, interval b)
@@ -270,70 +305,14 @@ inline bool in(interval a, interval b)
   return in_ii(a, b);
 }
 
+inline interval operator|(interval a, interval b)
+{
+  return hull(a, b);
+}
+
 inline interval operator&(interval a, interval b)
 {
   return intsec(a, b);
-}
-
-inline bool operator<(interval a, interval b)
-{
-  return in_ii(a, b);
-}
-
-inline bool operator<(double a, interval b)
-{
-  if (b.INF < a && a < b.SUP)
-    return 1;
-  else
-    return 0;
-}
-
-inline bool operator>=(interval a, double b)
-{
-  if (a.INF <= b && b <= a.SUP)
-    return 1;
-  else
-    return 0;
-}
-
-inline bool operator>(interval a, double b)
-{
-  if (a.INF < b && b < a.SUP)
-    return 1;
-  else
-    return 0;
-}
-
-inline bool operator!=(interval a, interval b)
-{
-  if (!(a.INF == b.INF && a.SUP == b.SUP))
-    return 1;
-  else
-    return 0;
-}
-
-inline bool operator<=(interval a, interval b)
-{
-  if (b.INF <= a.INF && a.SUP <= b.SUP)
-    return 1;
-  else
-    return 0;
-}
-
-inline bool operator>=(interval a, interval b)
-{
-  if (b.INF >= a.INF && a.SUP >= b.SUP)
-    return 1;
-  else
-    return 0;
-}
-
-inline bool operator>(interval a, interval b)
-{
-  if (b.INF > a.INF && a.SUP > b.SUP)
-    return 1;
-  else
-    return 0;
 }
 
 /* ------------------------------------------------------------------- */
@@ -392,6 +371,7 @@ inline interval max(interval x, interval y)
 {
   return _interval(std::max(x.INF, y.INF), std::max(x.SUP, y.SUP));
 }
+
 inline interval max(interval x, double y)
 {
   return _interval(std::max(x.INF, y), std::max(x.SUP, y));
@@ -406,6 +386,7 @@ inline interval min(interval x, interval y)
 {
   return _interval(std::min(x.INF, y.INF), std::min(x.SUP, y.SUP));
 }
+
 inline interval min(interval x, double y)
 {
   return _interval(std::min(x.INF, y), std::min(x.SUP, y));
@@ -420,49 +401,9 @@ inline interval min(double x, interval y)
 /* --- interval arithmetic (elementary functions)                  --- */
 /* ------------------------------------------------------------------- */
 
-inline interval exp(interval a)
+inline interval sqr(interval a)
 {
-  return j_exp(a);
-}
-
-inline interval expm(interval a)
-{
-  return j_expm(a);
-}
-
-inline interval sinh(interval a)
-{
-  return j_sinh(a);
-}
-
-inline interval cosh(interval a)
-{
-  return j_cosh(a);
-}
-
-inline interval coth(interval a)
-{
-  return j_coth(a);
-}
-
-inline interval tanh(interval a)
-{
-  return j_tanh(a);
-}
-
-inline interval log(interval a)
-{
-  return j_log(a);
-}
-
-inline interval ln(interval a)
-{
-  return j_log(a);
-}
-
-inline interval lg1p(interval a)
-{
-  return j_lg1p(a);
+  return j_sqr(a);
 }
 
 inline interval sqrt(interval a)
@@ -470,70 +411,51 @@ inline interval sqrt(interval a)
   return j_sqrt(a);
 }
 
-inline interval sqr(interval a)
+// exponentiation
+
+inline interval exp(interval a)
 {
-  return j_sqr(a);
+  return j_exp(a);
 }
 
-inline interval asnh(interval a)
+inline interval exp2(interval a)
 {
-  return j_asnh(a);
+  return j_exp2(a);
 }
 
-inline interval asinh(interval a)
+inline interval exp10(interval a)
 {
-  return j_asnh(a);
+  return j_ex10(a);
 }
 
-inline interval acsh(interval a)
+inline interval expm(interval a)
 {
-  return j_acsh(a);
+  return j_expm(a);
 }
 
-inline interval acosh(interval a)
+// logarithm
+
+inline interval log(interval a)
 {
-  return j_acsh(a);
+  return j_log(a);
 }
 
-inline interval acth(interval a)
+inline interval log2(interval a)
 {
-  return j_acth(a);
+  return j_log2(a);
 }
 
-inline interval acoth(interval a)
+inline interval log10(interval a)
 {
-  return j_acth(a);
+  return j_lg10(a);
 }
 
-inline interval atnh(interval a)
+inline interval lg1p(interval a)
 {
-  return j_atnh(a);
+  return j_lg1p(a);
 }
 
-inline interval atanh(interval a)
-{
-  return j_atnh(a);
-}
-
-inline interval asin(interval a)
-{
-  return j_asin(a);
-}
-
-inline interval acos(interval a)
-{
-  return j_acos(a);
-}
-
-inline interval acot(interval a)
-{
-  return j_acot(a);
-}
-
-inline interval atan(interval a)
-{
-  return j_atan(a);
-}
+// trigonometric functions
 
 inline interval sin(interval a)
 {
@@ -555,25 +477,73 @@ inline interval tan(interval a)
   return j_tan(a);
 }
 
-inline interval exp2(interval a)
+// inverse trigonometric functions
+
+inline interval asin(interval a)
 {
-  return j_exp2(a);
+  return j_asin(a);
 }
 
-inline interval ex10(interval a)
+inline interval acos(interval a)
 {
-  return j_ex10(a);
+  return j_acos(a);
 }
 
-inline interval log2(interval a)
+inline interval acot(interval a)
 {
-  return j_log2(a);
+  return j_acot(a);
 }
 
-inline interval lg10(interval a)
+inline interval atan(interval a)
 {
-  return j_lg10(a);
+  return j_atan(a);
 }
+
+// hyperbolic functions
+
+inline interval sinh(interval a)
+{
+  return j_sinh(a);
+}
+
+inline interval cosh(interval a)
+{
+  return j_cosh(a);
+}
+
+inline interval coth(interval a)
+{
+  return j_coth(a);
+}
+
+inline interval tanh(interval a)
+{
+  return j_tanh(a);
+}
+
+// inverse hyperbolic functions
+
+inline interval asinh(interval a)
+{
+  return j_asnh(a);
+}
+
+inline interval acosh(interval a)
+{
+  return j_acsh(a);
+}
+
+inline interval acoth(interval a)
+{
+  return j_acth(a);
+}
+
+inline interval atanh(interval a)
+{
+  return j_atnh(a);
+}
+
+// error function
 
 inline interval erf(interval a)
 {
