@@ -250,19 +250,53 @@ inline bool operator==(interval a, double b)
   return ieq_ii(a, _interval(b));
 }
 
+inline bool operator==(double a, interval b)
+{
+  return ieq_ii(_interval(a), b);
+}
+
 inline bool operator!=(interval a, interval b)
 {
   return a.INF != b.INF || a.SUP != b.SUP;
 }
 
+inline bool operator!=(interval a, double b)
+{
+  return a.INF != b || a.SUP != b;
+}
+
+inline bool operator!=(double a, interval b)
+{
+  return a != b.INF || a != b.SUP;
+}
+
 inline bool operator<(interval a, interval b)
 {
-  return in_ii(a, b);
+  // return in_ii(a, b);
+  return a.SUP < b.INF;
+}
+
+inline bool operator<(interval a, double b)
+{
+  // return a.INF < b && b < a.SUP;
+  return a.SUP < b;
 }
 
 inline bool operator<(double a, interval b)
 {
-  return b.INF < a && a < b.SUP;
+  // return b.INF < a && a < b.SUP;
+  return a < b.INF;
+}
+
+inline bool operator<=(interval a, interval b)
+{
+  // return b.INF <= a.INF && a.SUP <= b.SUP;
+  return a.SUP <= b.INF;
+}
+
+inline bool operator<=(interval a, double b)
+{
+  return a.SUP <= b;
 }
 
 inline bool operator<=(double a, interval b)
@@ -270,29 +304,38 @@ inline bool operator<=(double a, interval b)
   return a <= b.INF;
 }
 
-inline bool operator<=(interval a, interval b)
+inline bool operator>(interval a, interval b)
 {
-  return b.INF <= a.INF && a.SUP <= b.SUP;
+  // return b.INF > a.INF && a.SUP > b.SUP;
+  return a.INF > b.SUP;
 }
 
 inline bool operator>(interval a, double b)
 {
-  return a.INF < b && b < a.SUP;
+  // return a.INF < b && b < a.SUP;
+  return a.INF > b;
 }
 
-inline bool operator>(interval a, interval b)
+inline bool operator>(double a, interval b)
 {
-  return b.INF > a.INF && a.SUP > b.SUP;
-}
-
-inline bool operator>=(interval a, double b)
-{
-  return a.INF <= b && b <= a.SUP;
+  return a > b.SUP;
 }
 
 inline bool operator>=(interval a, interval b)
 {
-  return b.INF >= a.INF && a.SUP >= b.SUP;
+  // return b.INF >= a.INF && a.SUP >= b.SUP;
+  return a.INF >= b.SUP;
+}
+
+inline bool operator>=(interval a, double b)
+{
+  // return a.INF <= b && b <= a.SUP;
+  return a.INF >= b;
+}
+
+inline bool operator>=(double a, interval b)
+{
+  return a >= b.SUP;
 }
 
 inline bool in(double a, interval b)
@@ -433,7 +476,7 @@ inline interval exp10(interval a)
   return j_ex10(a);
 }
 
-inline interval expm(interval a)
+inline interval expm1(interval a)
 {
   return j_expm(a);
 }
@@ -455,7 +498,7 @@ inline interval log10(interval a)
   return j_lg10(a);
 }
 
-inline interval lg1p(interval a)
+inline interval log1p(interval a)
 {
   return j_lg1p(a);
 }
