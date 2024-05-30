@@ -389,7 +389,7 @@ int in_di(double x,interval y)
 
 int in_ii(interval x,interval y)
 {
-  if (y.INF<x.INF && x.SUP<y.SUP)
+  if (y.INF<=x.INF && x.SUP<=y.SUP)
     return 1;
   else
     return 0;
