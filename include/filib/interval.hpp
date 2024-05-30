@@ -363,6 +363,18 @@ inline interval operator&(interval a, interval b)
   return intsec(a, b);
 }
 
+inline interval &operator|=(interval &lhs, const interval &rhs)
+{
+  lhs = lhs | rhs;
+  return lhs;
+}
+
+inline interval &operator&=(interval &lhs, const interval &rhs)
+{
+  lhs = lhs & rhs;
+  return lhs;
+}
+
 /* ------------------------------------------------------------------- */
 /* --- utilities, mid, diam, ...                                   --- */
 /* ------------------------------------------------------------------- */
