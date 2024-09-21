@@ -58,6 +58,9 @@ endif()
 
 project(filib DESCRIPTION "A fast interval library" LANGUAGES C CXX VERSION 1.2.1)
 
+# Prefer a shared library to make it easier to adhere to the LGPL-2.1 license
+option(FILIB_BUILD_SHARED_LIB "Build shared library" ON)
+
 # Set default minimum C++ standard
 if(FILIB_TOPLEVEL_PROJECT)
   set(CMAKE_CXX_STANDARD 11)
@@ -79,21 +82,41 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 ################################################################################
 
 # Add an empty library and fill in the list of sources in `src/CMakeLists.txt`.
-add_library(filib_filib)
-add_library(filib::filib ALIAS filib_filib)
+if(FILIB_BUILD_SHARED_LIB)
+  add_library(filib SHARED)
+
+  set_target_properties(filib PROPERTIES
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+    PUBLIC_HEADER "include/filib/fi_lib.h;include/filib/interval.hpp")
+
+  configure_file(filib.pc.in filib.pc @ONLY)
+
+  include(GNUInstallDirs)
+  install(TARGETS filib
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/filib")
+
+  install(FILES ${CMAKE_BINARY_DIR}/filib.pc
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
+else()
+  add_library(filib STATIC)
+endif()
+
+add_library(filib::filib ALIAS filib)
 
 # Add source to filib
 add_subdirectory("${FILIB_SOURCE_DIR}")
 
 # Public include directory for filib
-target_include_directories(filib_filib PUBLIC "${FILIB_INCLUDE_DIR}")
+target_include_directories(filib PUBLIC "${FILIB_INCLUDE_DIR}")
 
 ################################################################################
 # Optional Definitions
 ################################################################################
 
 # For MSVC, do not use the min and max macros.
-target_compile_definitions(filib_filib PUBLIC NOMINMAX)
+target_compile_definitions(filib PUBLIC NOMINMAX)
 
 ################################################################################
 # Dependencies
@@ -101,7 +124,7 @@ target_compile_definitions(filib_filib PUBLIC NOMINMAX)
 
 # Extra warnings (link last for highest priority)
 include(filib_warnings)
-target_link_libraries(filib_filib PRIVATE filib::warnings)
+target_link_libraries(filib PRIVATE filib::warnings)
 
 ################################################################################
 # Tests
