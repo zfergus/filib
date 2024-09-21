@@ -1,5 +1,7 @@
 # filib
 
+[![Build](https://github.com/zfergus/filib/actions/workflows/continuous.yml/badge.svg)](https://github.com/zfergus/filib/actions/workflows/continuous.yml)
+
 **A fast interval library**
 
 ## Description
