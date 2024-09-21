@@ -56,17 +56,10 @@ endif()
 
 ################################################################################
 
-project(filib DESCRIPTION "A fast interval library" LANGUAGES C CXX VERSION 1.2.1)
+project(filib DESCRIPTION "A fast interval library" LANGUAGES C VERSION 1.2.1)
 
 # Prefer a shared library to make it easier to adhere to the LGPL-2.1 license
 option(FILIB_BUILD_SHARED_LIB "Build shared library" ON)
-
-# Set default minimum C++ standard
-if(FILIB_TOPLEVEL_PROJECT)
-  set(CMAKE_CXX_STANDARD 11)
-  set(CMAKE_CXX_STANDARD_REQUIRED ON)
-  set(CMAKE_CXX_EXTENSIONS OFF)
-endif()
 
 ### Configuration
 set(FILIB_SOURCE_DIR "${PROJECT_SOURCE_DIR}/src")
@@ -121,6 +114,9 @@ target_compile_definitions(filib PUBLIC NOMINMAX)
 ################################################################################
 # Dependencies
 ################################################################################
+
+# m is required for math functions
+target_link_libraries(filib PRIVATE m)
 
 # Extra warnings (link last for highest priority)
 include(filib_warnings)
