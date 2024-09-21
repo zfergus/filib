@@ -115,8 +115,10 @@ target_compile_definitions(filib PUBLIC NOMINMAX)
 # Dependencies
 ################################################################################
 
-# m is required for math functions
-target_link_libraries(filib PRIVATE m)
+if(UNIX)
+  # m is required for math functions
+  target_link_libraries(filib PRIVATE m)
+endif()
 
 # Extra warnings (link last for highest priority)
 include(filib_warnings)
