@@ -99,4 +99,15 @@ jobs:
         shell: cmd
         run: |
           call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64
-          cmake --build build -j ${{ steps.cpu-cores.outputs.count }} && ccache --show-stats
+          cmake --build build -j ${{ steps.cpu-cores.outputs.count }} && ccache --show-stat
+
+      - name: Tests
+        run: |
+          cd build/tests
+          echo 1e-8        | ./bisection_bin
+          echo 1.01 1.02   | ./comp_exp_bin
+          echo 1.01 1.02   | ./comp_sin_bin
+          echo 1           | ./fi_test_bin
+          echo -2.0 -1.99  | ./hornerc_bin
+          echo -2.0 -1.99  | ./hornercpp_bin
+          echo -10 10 1e-5 | ./xinewton_bin
