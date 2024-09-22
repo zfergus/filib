@@ -76,6 +76,10 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # Add an empty library and fill in the list of sources in `src/CMakeLists.txt`.
 if(FILIB_BUILD_SHARED_LIB)
+  if(MSVC)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+  endif()
+
   add_library(filib SHARED)
 
   set_target_properties(filib PROPERTIES
