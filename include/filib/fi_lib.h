@@ -39,6 +39,16 @@
 #include <math.h>
 #include <float.h>
 
+#if defined(_WIN32) || defined(WIN32)
+#ifdef FILIB_DLLEXPORT
+#define API __declspec(dllexport)
+#else
+#define API __declspec(dllimport)
+#endif
+#else
+#define API
+#endif
+
 /*********************************************************************/
 /*                    CONFIGURE FI_LIB.H here !!!                    */
 /*********************************************************************/
@@ -159,7 +169,7 @@ extern double q_l2;
 extern double q_p2h;
 extern double q_p2mh;
 extern double q_mine;
-extern double q_minr;
+API extern double q_minr;
 extern double q_pi;
 extern double q_piha;
 extern double q_pih[7];

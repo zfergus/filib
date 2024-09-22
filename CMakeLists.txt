@@ -82,6 +82,10 @@ if(FILIB_BUILD_SHARED_LIB)
 
   add_library(filib SHARED)
 
+  if (MSVC)
+    target_compile_definitions(filib PRIVATE FILIB_DLLEXPORT)
+  endif()
+
   set_target_properties(filib PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR}
