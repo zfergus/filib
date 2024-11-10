@@ -59,7 +59,7 @@ set(FILIB_WARNING_FLAGS
 
 # Flags above don't make sense for MSVC
 if(MSVC)
-  set(MY_FLAGS)
+  set(FILIB_WARNING_FLAGS)
 endif()
 
 include(CheckCCompilerFlag)
